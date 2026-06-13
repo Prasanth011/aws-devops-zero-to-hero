@@ -2,26 +2,29 @@ version: 0.2
 
 env:
   parameter-store:
-    user-docker-password: /my/docker-registry/password
-    user-docker-username: /my/docker-registry/username
-    user-docker-repositry-url: /my/docker-registry/URL
+    DOCKER_PASSWORD: /my/docker-registry/password
+    DOCKER_USERNAME: /my/docker-registry/username
+    DOCKER_REGISTRY_URL: /my/docker-registry/URL
+
 phases:
   install:
     runtime-versions:
       python: 3.13
-      
+
   pre_build:
     commands:
       - echo "Installing Dependencies"
       - pip install -r day-14/simple-python-app/requirements.txt
       - echo "Logging Into Docker"
-      - echo "$user-docker-password" | docker login -u "$user-docker-username" --password-stdin
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
   build:
     commands:
       - echo "Running Tests"
       - cd day-14/simple-python-app
-      - docker build -t "user-docker-repositry-url/user-docker-username/docker-flask-app:latest" .
-      - docker push "user-docker-repositry-url/user-docker-username/docker-flask-app:latest"
+      - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_USERNAME/docker-flask-app:latest" .
+      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_USERNAME/docker-flask-app:latest"
+
   post_build:
     commands:
       - echo "Build Is Successful"
