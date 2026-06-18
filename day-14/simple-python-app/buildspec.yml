@@ -27,4 +27,4 @@ phases:
 
   post_build:
     commands:
-      - echo "Kam khatam behenchodddd rand "
+      - echo "Kam khatam behenchodddd rand kahika"
