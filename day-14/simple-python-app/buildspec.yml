@@ -27,4 +27,4 @@ phases:
 
   post_build:
     commands:
-      - echo "Build Is completed motherfucking bitch "
+      - echo "Kam khatam behenchod "
